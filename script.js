@@ -63,24 +63,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateCursorAndGlow() {
-        // Movimiento del cursor (LERP para suavidad)
         currentX += (mouseX - currentX) * 0.2;
         currentY += (mouseY - currentY) * 0.2;
-
         cursor.style.transform = `translate(${currentX - 10}px, ${currentY - 10}px)`;
 
-        // MOVIMIENTO DEL DESTRELLO (Opuesto al cursor)
-        // Calculamos la posición opuesta respecto al centro de la pantalla
         const glowX = window.innerWidth / 2 - (mouseX - window.innerWidth / 2);
         const glowY = window.innerHeight / 2 - (mouseY - window.innerHeight / 2);
-
         bgGlow.style.transform = `translate(${glowX - (window.innerWidth * 0.3)}px, ${glowY - (window.innerHeight * 0.3)}px)`;
-
         requestAnimationFrame(updateCursorAndGlow);
     }
     updateCursorAndGlow();
 
-    // 2. THREE.JS MODELO 3D
+    // 2. THREE.JS LOGO "JL" 3D GEOMÉTRICO
     const init3D = () => {
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
@@ -90,21 +84,38 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(renderer.domElement);
 
-        // Color verde BambuLab para el modelo 3D
-        const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
+        // MATERIAL VERDE BAMBULAB NEÓN
         const material = new THREE.MeshPhongMaterial({
             color: 0x22c55e,
-            wireframe: true,
             emissive: 0x16a34a,
-            emissiveIntensity: 0.5
+            emissiveIntensity: 1.2,
+            shininess: 100
         });
-        const object = new THREE.Mesh(geometry, material);
-        scene.add(object);
 
-        const light = new THREE.PointLight(0xffffff, 1, 100);
-        light.position.set(10, 10, 10);
+        const logoGroup = new THREE.Group();
+
+        // --- LETRA J ---
+        const jVertical = new THREE.Mesh(new THREE.BoxGeometry(0.4, 2, 0.4), material);
+        jVertical.position.x = -0.8;
+
+        const jBottom = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.4, 0.4), material);
+        jBottom.position.set(-0.6, -0.8, 0);
+
+        // --- LETRA L ---
+        const lVertical = new THREE.Mesh(new THREE.BoxGeometry(0.4, 2, 0.4), material);
+        lVertical.position.x = 0.8;
+
+        const lBottom = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.4, 0.4), material);
+        lBottom.position.set(1.0, -0.8, 0);
+
+        logoGroup.add(jVertical, jBottom, lVertical, lBottom);
+        scene.add(logoGroup);
+
+        // Luces para realzar el relieve
+        const light = new THREE.PointLight(0xffffff, 1.5, 100);
+        light.position.set(5, 5, 5);
         scene.add(light);
-        scene.add(new THREE.AmbientLight(0x404040));
+        scene.add(new THREE.AmbientLight(0x404040, 1));
 
         camera.position.z = 5;
 
@@ -119,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     x: e.offsetX - previousMousePosition.x,
                     y: e.offsetY - previousMousePosition.y
                 };
-                object.rotation.y += deltaMove.x * 0.01;
-                object.rotation.x += deltaMove.y * 0.01;
+                logoGroup.rotation.y += deltaMove.x * 0.01;
+                logoGroup.rotation.x += deltaMove.y * 0.01;
             }
             previousMousePosition = { x: e.offsetX, y: e.offsetY };
         });
@@ -128,8 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function animate() {
             requestAnimationFrame(animate);
             if(!isDragging) {
-                object.rotation.x += 0.005;
-                object.rotation.y += 0.005;
+                logoGroup.rotation.y += 0.01;
             }
             renderer.render(scene, camera);
         }
