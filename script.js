@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     updateCursorAndGlow();
 
-    // 2. THREE.JS LOGO "JL" 3D GEOMÉTRICO
+    // 2. THREE.JS MODELO 3D (Regreso al Torus Knot Tecnológico)
     const init3D = () => {
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
@@ -84,38 +84,20 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(renderer.domElement);
 
-        // MATERIAL VERDE BAMBULAB NEÓN
+        const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
         const material = new THREE.MeshPhongMaterial({
             color: 0x22c55e,
+            wireframe: true,
             emissive: 0x16a34a,
-            emissiveIntensity: 1.2,
-            shininess: 100
+            emissiveIntensity: 0.5
         });
+        const object = new THREE.Mesh(geometry, material);
+        scene.add(object);
 
-        const logoGroup = new THREE.Group();
-
-        // --- LETRA J ---
-        const jVertical = new THREE.Mesh(new THREE.BoxGeometry(0.4, 2, 0.4), material);
-        jVertical.position.x = -0.8;
-
-        const jBottom = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.4, 0.4), material);
-        jBottom.position.set(-0.6, -0.8, 0);
-
-        // --- LETRA L ---
-        const lVertical = new THREE.Mesh(new THREE.BoxGeometry(0.4, 2, 0.4), material);
-        lVertical.position.x = 0.8;
-
-        const lBottom = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.4, 0.4), material);
-        lBottom.position.set(1.0, -0.8, 0);
-
-        logoGroup.add(jVertical, jBottom, lVertical, lBottom);
-        scene.add(logoGroup);
-
-        // Luces para realzar el relieve
-        const light = new THREE.PointLight(0xffffff, 1.5, 100);
+        const light = new THREE.PointLight(0xffffff, 1, 100);
         light.position.set(5, 5, 5);
         scene.add(light);
-        scene.add(new THREE.AmbientLight(0x404040, 1));
+        scene.add(new THREE.AmbientLight(0x404040));
 
         camera.position.z = 5;
 
@@ -130,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     x: e.offsetX - previousMousePosition.x,
                     y: e.offsetY - previousMousePosition.y
                 };
-                logoGroup.rotation.y += deltaMove.x * 0.01;
-                logoGroup.rotation.x += deltaMove.y * 0.01;
+                object.rotation.y += deltaMove.x * 0.01;
+                object.rotation.x += deltaMove.y * 0.01;
             }
             previousMousePosition = { x: e.offsetX, y: e.offsetY };
         });
@@ -139,7 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
         function animate() {
             requestAnimationFrame(animate);
             if(!isDragging) {
-                logoGroup.rotation.y += 0.01;
+                object.rotation.x += 0.005;
+                object.rotation.y += 0.005;
             }
             renderer.render(scene, camera);
         }
