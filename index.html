@@ -14,7 +14,6 @@
     <!-- Cursor Personalizado (Filamento BambuLab) -->
     <div id="custom-cursor">
         <div class="filament-core"></div>
-        <div class="filament-label">Bambu PLA</div>
     </div>
 
     <nav class="navbar">
@@ -46,7 +45,6 @@
             </div>
             <div class="hero-visual">
                 <div id="canvas-container">
-                    <!-- El modelo 3D se renderiza aquí con Three.js -->
                     <div class="canvas-hint">Arrastra para rotar la pieza</div>
                 </div>
             </div>
@@ -110,8 +108,8 @@
             <div class="contact-grid">
                 <div class="contact-info glass-card">
                     <h3 class="mb-4">Contacto Directo</h3>
-                    <div class="info-item"><i data-lucide="mail"></i> <div><strong>Email</strong><p>contacto@jlimpresions3d.com</p></div></div>
-                    <div class="info-item"><i data-lucide="phone"></i> <div><strong>WhatsApp</strong><p>+34 600 000 000</p></div></div>
+                    <div class="info-item"><i data-lucide="instagram"></i> <div><strong>Instagram</strong><p>@jlimpresions3d</p></div></div>
+                    <div class="info-item" id="whatsapp-trigger"><i data-lucide="phone"></i> <div><strong>WhatsApp</strong><p>+34 695 60 45 63</p></div></div>
                     <div class="info-item"><i data-lucide="map-pin"></i> <div><strong>Taller</strong><p>España, Centro de Diseño 3D</p></div></div>
                 </div>
                 <form class="contact-form glass-card" id="contact-form">
@@ -137,6 +135,21 @@
             </div>
         </div>
     </section>
+
+    <div id="whatsapp-modal" class="modal">
+        <div class="modal-content glass-card">
+            <button id="close-modal" class="close-btn">&times;</button>
+            <div class="modal-body text-center">
+                <div class="whatsapp-icon"><i data-lucide="message-circle"></i></div>
+                <h2>Contacto Directo</h2>
+                <p>Habla con nosotros por WhatsApp para una cotización rápida.</p>
+                <p class="phone-number">+34 695 60 45 63</p>
+                <a href="https://wa.me/34695604563" target="_blank" class="btn-primary full-width">
+                    Abrir Chat de WhatsApp <i data-lucide="external-link"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <p>&copy; 2026 <strong>JLImpresions3D</strong>. Calidad, Precisión y Pasión Digital.</p>

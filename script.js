@@ -50,20 +50,29 @@ const projects = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. CUSTOM CURSOR (FILAMENTO BAMBULAB)
+    // 1. CUSTOM CURSOR (SÚPER OPTIMIZADO)
     const cursor = document.getElementById('custom-cursor');
+
+    // Usamos requestAnimationFrame para que el cursor sea fluido y no tenga lag
+    let mouseX = 0, mouseY = 0;
+    let currentX = 0, currentY = 0;
+
     document.addEventListener('mousemove', (e) => {
-        cursor.style.transform = `translate(${e.clientX - 12}px, ${e.clientY - 12}px)`;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
     });
 
-    document.addEventListener('mousedown', () => {
-        cursor.style.transform += ' scale(0.8)';
-    });
-    document.addEventListener('mouseup', () => {
-        cursor.style.transform = cursor.style.transform.replace(' scale(0.8)', '');
-    });
+    function updateCursor() {
+        // Interpolación lineal (LERP) para un movimiento suave pero rápido
+        currentX += (mouseX - currentX) * 0.2;
+        currentY += (mouseY - currentY) * 0.2;
 
-    // 2. THREE.JS MODELO 3D (Cubo Tecnológico)
+        cursor.style.transform = `translate(${currentX - 10}px, ${currentY - 10}px)`;
+        requestAnimationFrame(updateCursor);
+    }
+    updateCursor();
+
+    // 2. THREE.JS MODELO 3D
     const init3D = () => {
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
@@ -73,18 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(renderer.domElement);
 
-        // Crear un cubo "estilo tecnológico" (como una pieza 3D)
-        const geometry = new THREE.BoxGeometry(2, 2, 2);
+        const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
         const material = new THREE.MeshPhongMaterial({
             color: 0x00f2ff,
             wireframe: true,
             emissive: 0x0044ff,
             emissiveIntensity: 0.5
         });
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+        const object = new THREE.Mesh(geometry, material);
+        scene.add(object);
 
-        // Luces
         const light = new THREE.PointLight(0xffffff, 1, 100);
         light.position.set(10, 10, 10);
         scene.add(light);
@@ -103,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     x: e.offsetX - previousMousePosition.x,
                     y: e.offsetY - previousMousePosition.y
                 };
-                cube.rotation.y += deltaMove.x * 0.01;
-                cube.rotation.x += deltaMove.y * 0.01;
+                object.rotation.y += deltaMove.x * 0.01;
+                object.rotation.x += deltaMove.y * 0.01;
             }
             previousMousePosition = { x: e.offsetX, y: e.offsetY };
         });
@@ -112,8 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
         function animate() {
             requestAnimationFrame(animate);
             if(!isDragging) {
-                cube.rotation.x += 0.005;
-                cube.rotation.y += 0.005;
+                object.rotation.x += 0.005;
+                object.rotation.y += 0.005;
             }
             renderer.render(scene, camera);
         }
@@ -166,6 +173,25 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add('active');
             renderProjects(btn.getAttribute('data-filter'));
         });
+    });
+
+    // 4. MODAL WHATSAPP
+    const phoneItem = document.querySelector('.info-item:nth-child(2)'); // El de teléfono
+    const modal = document.getElementById('whatsapp-modal');
+    const closeBtn = document.getElementById('close-modal');
+
+    if(phoneItem) {
+        phoneItem.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+    }
+
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if(e.target === modal) modal.style.display = 'none';
     });
 
     // Scroll Reveal
