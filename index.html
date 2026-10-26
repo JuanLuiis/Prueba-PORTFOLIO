@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3DLAB | Portfolio de Impresión 3D Profesional</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fuentes y Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i data-lucide="box"></i></div>
+                <span>3D<span class="text-primary">LAB</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#sobre-mi">Sobre mí</a></li>
+                <li><a href="#contacto" class="btn-primary">Contacto</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <i data-lucide="menu"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="container grid">
+            <div class="hero-text animate-up">
+                <span class="badge">Fabricación Digital Avanzada</span>
+                <h1>Transformando Ideas en <span class="gradient-text">Realidad Tangible</span></h1>
+                <p>Especialista en diseño e impresión 3D profesional. Fusiono la precisión técnica con la creatividad para crear piezas funcionales y prototipos de alta fidelidad.</p>
+                <div class="hero-btns">
+                    <a href="#proyectos" class="btn-primary">Explorar Proyectos <i data-lucide="arrow-right"></i></a>
+                    <a href="#sobre-mi" class="btn-secondary">Sobre mí</a>
+                </div>
+            </div>
+            <div class="hero-visual animate-fade">
+                <div class="visual-card">
+                    <div class="visual-placeholder">
+                        <i data-lucide="box" class="big-icon"></i>
+                        <p class="mono">Visualizing Dimension</p>
+                    </div>
+                    <div class="spec-tag tag-1"><i data-lucide="layers"></i> Layer: 0.12mm</div>
+                    <div class="spec-tag tag-2"><i data-lucide="cpu"></i> Material: Carbon PLA</div>
+                    <div class="spec-tag tag-3"><i data-lucide="palette"></i> Finish: Matte</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="proyectos" class="projects">
+        <div class="container">
+            <div class="section-header animate-up">
+                <h2>Galería de <span class="gradient-text">Creaciones</span></h2>
+                <p>Un recorrido por la precisión técnica y la experimentación material.</p>
+            </div>
+
+            <div class="filter-bar" id="filter-bar">
+                <button class="filter-btn active" data-filter="Todos">Todos</button>
+                <button class="filter-btn" data-filter="Prototipado">Prototipado</button>
+                <button class="filter-btn" data-filter="Artístico">Artístico</button>
+                <button class="filter-btn" data-filter="Funcional">Funcional</button>
+                <button class="filter-btn" data-filter="Miniaturas">Miniaturas</button>
+            </div>
+
+            <div class="projects-grid" id="projects-grid">
+                <!-- Los proyectos se cargan mediante JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre-mi" class="about">
+        <div class="container grid">
+            <div class="about-card glass-card animate-fade">
+                <div class="profile-img">
+                    <i data-lucide="user"></i>
+                </div>
+                <h3>Tu Nombre</h3>
+                <p class="mono text-primary">3D Designer & Maker</p>
+                <div class="social-links">
+                    <a href="#"><i data-lucide="github"></i></a>
+                    <a href="#"><i data-lucide="linkedin"></i></a>
+                    <a href="#"><i data-lucide="twitter"></i></a>
+                </div>
+            </div>
+            <div class="about-content animate-up">
+                <h2>Pasión por la <span class="gradient-text">Fabricación Digital</span></h2>
+                <p>Hola, soy un entusiasta y profesional de la impresión 3D. Mi viaje comenzó con la curiosidad de transformar un archivo STL en un objeto tangible, y ha evolucionado hacia la creación de soluciones complejas.</p>
+                <p>Mi filosofía se basa en la precisión y la experimentación. No busco solo que una pieza "imprima", sino optimizar la estructura y lograr acabados profesionales.</p>
+
+                <div class="skills-grid">
+                    <div class="skill-item"><i data-lucide="code"></i> Fusion 360 <span class="lvl">Avanzado</span></div>
+                    <div class="skill-item"><i data-lucide="palette"></i> Blender <span class="lvl">Intermedio</span></div>
+                    <div class="skill-item"><i data-lucide="layers"></i> Slicing <span class="lvl">Experto</span></div>
+                    <div class="skill-item"><i data-lucide="tool"></i> Post-procesado <span class="lvl">Avanzado</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Hablemos de tu <span class="gradient-text">Próximo Proyecto</span></h2>
+                <p>¿Tienes una idea que necesita cobrar vida?</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info glass-card">
+                    <h3>Canales de Contacto</h3>
+                    <div class="info-item">
+                        <i data-lucide="mail"></i>
+                        <div><strong>Email</strong><p>hola@tuportfolio3d.com</p></div>
+                    </div>
+                    <div class="info-item">
+                        <i data-lucide="phone"></i>
+                        <div><strong>Teléfono</strong><p>+34 600 000 000</p></div>
+                    </div>
+                    <div class="info-item">
+                        <i data-lucide="map-pin"></i>
+                        <div><strong>Ubicación</strong><p>Ciudad, País</p></div>
+                    </div>
+                </div>
+                <form class="contact-form glass-card" id="contact-form">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" required placeholder="Tu nombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" required placeholder="correo@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Mensaje</label>
+                        <textarea required rows="5" placeholder="Cuéntame tu idea..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Enviar Mensaje <i data-lucide="send"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 3DLAB. Diseñado con precisión técnica.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Inicializar iconos de Lucide
+        lucide.createIcons();
+    </script>
+</body>
+</html>
