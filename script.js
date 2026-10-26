@@ -50,8 +50,9 @@ const projects = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. CUSTOM CURSOR (SÚPER OPTIMIZADO)
+    // 1. CUSTOM CURSOR & BG GLOW
     const cursor = document.getElementById('custom-cursor');
+    const bgGlow = document.getElementById('bg-glow');
 
     let mouseX = 0, mouseY = 0;
     let currentX = 0, currentY = 0;
@@ -61,14 +62,23 @@ document.addEventListener('DOMContentLoaded', () => {
         mouseY = e.clientY;
     });
 
-    function updateCursor() {
+    function updateCursorAndGlow() {
+        // Movimiento del cursor (LERP para suavidad)
         currentX += (mouseX - currentX) * 0.2;
         currentY += (mouseY - currentY) * 0.2;
 
         cursor.style.transform = `translate(${currentX - 10}px, ${currentY - 10}px)`;
-        requestAnimationFrame(updateCursor);
+
+        // MOVIMIENTO DEL DESTRELLO (Opuesto al cursor)
+        // Calculamos la posición opuesta respecto al centro de la pantalla
+        const glowX = window.innerWidth / 2 - (mouseX - window.innerWidth / 2);
+        const glowY = window.innerHeight / 2 - (mouseY - window.innerHeight / 2);
+
+        bgGlow.style.transform = `translate(${glowX - (window.innerWidth * 0.3)}px, ${glowY - (window.innerHeight * 0.3)}px)`;
+
+        requestAnimationFrame(updateCursorAndGlow);
     }
-    updateCursor();
+    updateCursorAndGlow();
 
     // 2. THREE.JS MODELO 3D
     const init3D = () => {
