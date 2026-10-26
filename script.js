@@ -1,56 +1,148 @@
 const projects = [
     {
         id: '1',
-        title: 'Soporte Ergonómico Mecánico',
-        category: 'Funcional',
-        description: 'Soporte ajustable diseñado para optimización de espacio de trabajo.',
-        tags: ['Modular', 'Ergonomía'],
+        title: 'Engranaje de Reducción Industrial',
+        category: 'Industrial',
+        description: 'Sustitución de pieza metálica por polímero técnico para reducir ruido y peso.',
+        tags: ['Nylon', 'Alta Carga', 'Mecánica'],
         image: 'box'
     },
     {
         id: '2',
-        title: 'Escultura Orgánica Fluida',
-        category: 'Artístico',
-        description: 'Exploración de formas matemáticas y flujo orgánico en 3D.',
-        tags: ['Algorítmico', 'Resina'],
+        title: 'Soporte de Pared para Router',
+        category: 'Hogar',
+        description: 'Diseño personalizado para ocultar cables y optimizar señal Wi-Fi.',
+        tags: ['PLA+', 'Organización', 'Custom'],
         image: 'box'
     },
     {
         id: '3',
-        title: 'Miniatura Cyberpunk',
-        category: 'Miniaturas',
-        description: 'Figura hiperdetallada con escala 1:12 y acabados premium.',
-        tags: ['Hiperdetalles', 'Gaming'],
+        title: 'Miniatura de Personaje Fantasy',
+        category: 'Arte',
+        description: 'Impresión en resina 4K con detalle de micras para coleccionismo.',
+        tags: ['Resina', 'Ultra Detalle', 'Pintura'],
         image: 'box'
     },
     {
         id: '4',
-        title: 'Carcasa de Drone Prototipo',
-        category: 'Prototipado',
-        description: 'Diseño aerodinámico para optimización de flujo de aire.',
-        tags: ['Aerodinámica', 'Pruebas'],
+        title: 'Adaptador de Manguera Especial',
+        category: 'Repuestos',
+        description: 'Pieza obsoleta fabricada mediante ingeniería inversa y escaneo 3D.',
+        tags: ['PETG', 'Ingeniería', 'Sustitución'],
+        image: 'box'
+    },
+    {
+        id: '5',
+        title: 'Case para Raspberry Pi 5',
+        category: 'Industrial',
+        description: 'Carcasa optimizada para ventilación activa y acceso a GPIO.',
+        tags: ['ABS', 'Térmico', 'Hardware'],
+        image: 'box'
+    },
+    {
+        id: '6',
+        title: 'Lámpara Geométrica Minimalista',
+        category: 'Arte',
+        description: 'Diseño basado en Voronoi para juegos de luces y sombras.',
+        tags: ['Litofanía', 'Decoración', 'Luz'],
         image: 'box'
     }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. CUSTOM CURSOR (FILAMENTO BAMBULAB)
+    const cursor = document.getElementById('custom-cursor');
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.transform = `translate(${e.clientX - 12}px, ${e.clientY - 12}px)`;
+    });
+
+    document.addEventListener('mousedown', () => {
+        cursor.style.transform += ' scale(0.8)';
+    });
+    document.addEventListener('mouseup', () => {
+        cursor.style.transform = cursor.style.transform.replace(' scale(0.8)', '');
+    });
+
+    // 2. THREE.JS MODELO 3D (Cubo Tecnológico)
+    const init3D = () => {
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+
+        // Crear un cubo "estilo tecnológico" (como una pieza 3D)
+        const geometry = new THREE.BoxGeometry(2, 2, 2);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0x00f2ff,
+            wireframe: true,
+            emissive: 0x0044ff,
+            emissiveIntensity: 0.5
+        });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // Luces
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x404040));
+
+        camera.position.z = 5;
+
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+
+        container.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => isDragging = false);
+        container.addEventListener('mousemove', (e) => {
+            if(isDragging) {
+                const deltaMove = {
+                    x: e.offsetX - previousMousePosition.x,
+                    y: e.offsetY - previousMousePosition.y
+                };
+                cube.rotation.y += deltaMove.x * 0.01;
+                cube.rotation.x += deltaMove.y * 0.01;
+            }
+            previousMousePosition = { x: e.offsetX, y: e.offsetY };
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if(!isDragging) {
+                cube.rotation.x += 0.005;
+                cube.rotation.y += 0.005;
+            }
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    };
+    init3D();
+
+    // 3. RENDER PROYECTOS
     const grid = document.getElementById('projects-grid');
     const filterBtns = document.querySelectorAll('.filter-btn');
 
     function renderProjects(filter = 'Todos') {
         grid.innerHTML = '';
+        const filtered = filter === 'Todos' ? projects : projects.filter(p => p.category === filter);
 
-        const filtered = filter === 'Todos'
-            ? projects
-            : projects.filter(p => p.category === filter);
-
-        filtered.forEach(p => {
+        filtered.forEach((p, i) => {
             const card = document.createElement('div');
             card.className = 'project-card animate-fade';
+            card.style.animationDelay = `${i * 100}ms`;
             card.innerHTML = `
                 <div class="project-img">
                     <div class="project-category">${p.category}</div>
-                    <i data-lucide="box" style="width: 48px; height: 48px; color: #3f3f46"></i>
+                    <i data-lucide="box" style="width: 60px; height: 60px; color: #3f3f46"></i>
                 </div>
                 <div class="project-info">
                     <h3>${p.title}</h3>
@@ -59,18 +151,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="project-tags">
                             ${p.tags.map(t => `<span>#${t}</span>`).join('')}
                         </div>
-                        <div class="text-primary" style="font-weight: 700; font-size: 0.8rem; cursor: pointer;">Detalles →</div>
+                        <div class="text-primary" style="font-weight: 700; font-size: 0.8rem; cursor: none;">Ver Caso →</div>
                     </div>
                 </div>
             `;
             grid.appendChild(card);
         });
-
-        // Re-inicializar iconos para los nuevos elementos
         lucide.createIcons();
     }
 
-    // Filtros
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
@@ -79,37 +168,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Mobile Menu
-    const menuToggle = document.getElementById('mobile-menu');
-    const navLinks = document.querySelector('.nav-links');
+    // Scroll Reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-up');
+            }
+        });
+    }, { threshold: 0.1 });
 
-    menuToggle.addEventListener('click', () => {
-        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        if(navLinks.style.display === 'flex') {
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '80px';
-            navLinks.style.left = '0';
-            navLinks.style.width = '100%';
-            navLinks.style.background = 'rgba(24, 24, 27, 0.95)';
-            navLinks.style.padding = '2rem';
-            navLinks.style.textAlign = 'center';
-            navLinks.style.borderBottom = '1px solid var(--border)';
-        }
-    });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
     // Formulario
-    const form = document.getElementById('contact-form');
-    form.addEventListener('submit', (e) => {
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
         e.preventDefault();
-        const btn = form.querySelector('button');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '¡Mensaje Enviado! ✓';
+        const btn = e.target.querySelector('button');
+        btn.innerHTML = 'Solicitud Enviada ✓';
         btn.style.background = '#22c55e';
         setTimeout(() => {
-            btn.innerHTML = originalText;
+            btn.innerHTML = 'Enviar Solicitud <i data-lucide="send"></i>';
             btn.style.background = '';
-            form.reset();
+            e.target.reset();
+            lucide.createIcons();
         }, 3000);
     });
 
