@@ -1,11 +1,11 @@
 :root {
-    --bg: #050507;
-    --card-bg: #0f0f13;
-    --primary: #22c55e; /* Verde BambuLab / Green-500 */
-    --accent: #16a34a;   /* Verde Bosque / Green-600 */
+    --bg: #0a0a0c;
+    --card-bg: rgba(15, 15, 19, 0.7);
+    --primary: #22c55e; /* Verde BambuLab */
+    --accent: #16a34a;
     --text-main: #f4f4f5;
     --text-muted: #a1a1aa;
-    --border: rgba(34, 197, 94, 0.15); /* Borde con tinte verde */
+    --border: rgba(34, 197, 94, 0.15);
     --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -17,7 +17,10 @@
 }
 
 body {
-    background-color: var(--bg);
+    /* FONDO DE ESTUDIO MINIMALISTA */
+    /* Creamos un degradado radial que simula una luz cenital blanca/gris en un entorno oscuro */
+    background: radial-gradient(circle at 50% -20%, #1e1e22 0%, #0a0a0c 60%);
+    background-attachment: fixed;
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
@@ -45,7 +48,7 @@ body {
 }
 
 .glass-card {
-    background: rgba(15, 15, 19, 0.7);
+    background: rgba(15, 15, 19, 0.6);
     backdrop-filter: blur(20px);
     border: 1px solid var(--border);
     border-radius: 2rem;
@@ -53,7 +56,7 @@ body {
     transition: var(--transition);
 }
 
-/* CURSOR FILAMENTO BAMBULAB - VERDE */
+/* CURSOR FILAMENTO BAMBULAB */
 #custom-cursor {
     position: fixed;
     width: 20px;
