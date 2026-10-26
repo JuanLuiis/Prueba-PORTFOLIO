@@ -19,17 +19,18 @@
 body {
     background-color: var(--bg);
     color: var(--text-main);
-    /* Tipografía Elegante: Outfit para el cuerpo */
-    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+    /* Tipografía Cyber-Industrial: Roboto para el cuerpo */
+    font-family: 'Roboto', system-ui, -apple-system, sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
 }
 
 h1, h2, h3, .logo {
-    /* Playfair Display para un look de lujo y sofisticación */
-    font-family: 'Playfair Display', serif;
-    font-weight: 800;
-    letter-spacing: -0.01em;
+    /* Rajdhani: Fuente cuadrada, tecnológica y futurista */
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .mono { font-family: 'JetBrains Mono', monospace; }
@@ -334,7 +335,7 @@ h1, h2, h3, .logo {
     width: 140px;
     height: 140px;
     background: linear-gradient(135deg, #18181b, #050507);
-    border-//radius: 50%;
+    border-radius: 50%;
     margin: 0 auto 2rem;
     display: flex;
     align-items: center;
