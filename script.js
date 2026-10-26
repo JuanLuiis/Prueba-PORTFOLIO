@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. CUSTOM CURSOR (SÚPER OPTIMIZADO)
     const cursor = document.getElementById('custom-cursor');
 
-    // Usamos requestAnimationFrame para que el cursor sea fluido y no tenga lag
     let mouseX = 0, mouseY = 0;
     let currentX = 0, currentY = 0;
 
@@ -63,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateCursor() {
-        // Interpolación lineal (LERP) para un movimiento suave pero rápido
         currentX += (mouseX - currentX) * 0.2;
         currentY += (mouseY - currentY) * 0.2;
 
@@ -82,11 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(renderer.domElement);
 
+        // Color verde BambuLab para el modelo 3D
         const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
         const material = new THREE.MeshPhongMaterial({
-            color: 0x00f2ff,
+            color: 0x22c55e,
             wireframe: true,
-            emissive: 0x0044ff,
+            emissive: 0x16a34a,
             emissiveIntensity: 0.5
         });
         const object = new THREE.Mesh(geometry, material);
@@ -176,12 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 4. MODAL WHATSAPP
-    const phoneItem = document.querySelector('.info-item:nth-child(2)'); // El de teléfono
+    const whatsappTrigger = document.getElementById('whatsapp-trigger');
     const modal = document.getElementById('whatsapp-modal');
     const closeBtn = document.getElementById('close-modal');
 
-    if(phoneItem) {
-        phoneItem.addEventListener('click', () => {
+    if(whatsappTrigger) {
+        whatsappTrigger.addEventListener('click', () => {
             modal.style.display = 'flex';
         });
     }
